@@ -1,0 +1,131 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    width: 100vw;
+    height: 100vh;
+    margin: 0 auto;
+    display: grid;
+    grid-template: 
+        "left_top ..... top    ....." 60px
+        "left_top ..... center ....." 100px
+        "left     ..... center ....." 1fr
+        "left     ..... .....  ....." 10px
+    /    300px    10px  1fr    10px;
+    background-color: #001B24;
+    /* overflow: hidden; */
+}
+
+header {
+    grid-area: left_top;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #FABD00;
+}
+
+header>img {
+    width: 80px;
+    height: 80px;
+    object-fit: contain;
+}
+
+header>div {
+    margin: 0px 5px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+header>div>h1 {
+    font-size: 60px;
+    font-weight: bold;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+
+}
+
+header>div>p {
+    font-size: 30px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+nav {
+    grid-area: left;
+    background-color: #FABD00;
+    padding: 10px 0px 0px;
+    display: flex;
+    flex-direction: column;
+}
+
+#add_map_btn {
+    margin: 20px auto;
+    width: 280px;
+    height: 40px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 20px;
+    font-weight: bold;
+    border-radius: 10px;
+    border: none;
+    box-shadow: -3px 5px #001B24;
+    background-color: #FE6832;
+}
+
+#map_list {
+    width: 100%;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    overflow: auto;
+}
+
+#map_list>il {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 16px;
+    font-weight: bold;
+    margin: 10px 5px 10px 10px;
+    text-align: left;
+    padding: 10px 5px;
+    line-height: 20px;
+}
+
+#map_list>il:not(#map_item_1) {
+    border-left: 3px solid #001B24;
+}
+
+#map_item_1 {
+    border-left: 5px solid #001B24;
+    border-bottom: 5px solid #001B24;
+}
+
+aside {
+    grid-area: top;
+    display: flex;
+}
+
+#zoom_range {
+    width: 50%;
+    margin: auto 30px 15px 0px;
+}
+
+#display_zoom_range {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: white;
+    font-size: 18px;
+    margin: auto auto 15px 0px;
+}
+
+main {
+    grid-area: center;
+    /* background-color: black; */
+    overflow: auto;
+}
+
+.map_img {
+    width: 1580px;
+    height: auto;
+}
+
+#markers {
+    color: white;
+}
