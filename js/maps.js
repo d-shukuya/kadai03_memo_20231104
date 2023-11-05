@@ -32,7 +32,7 @@ class Maps {
         );
       }
       this.MapList.push(mapItem);
-      this.ShowMapList(this.MapList[i].MapName);
+      this.ShowMapList(array[i][0]);
     }
 
     if (index == "") {
