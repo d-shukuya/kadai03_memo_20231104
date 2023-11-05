@@ -1,5 +1,6 @@
 class MapItem {
   #memoList = [];
+  #baseImgWidth = 1580;
 
   #mapName = "";
   set MapName(val) {
@@ -71,7 +72,7 @@ class MapItem {
     $("#display_zoom_range").html(html);
 
     // マップ画像の倍率反映
-    const cal = (1580 * this.#zoomValue) / 100;
+    const cal = (this.#baseImgWidth * this.#zoomValue) / 100;
     const px = `${cal}px`;
     $(".map_img").css("width", px);
     $("#zoom_range").val(this.#zoomValue);
