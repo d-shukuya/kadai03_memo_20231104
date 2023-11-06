@@ -2,18 +2,27 @@
 // Mapsクラスを生成
 const maps = new Maps();
 
+// localStorageのkey名
+const selectedMapIndexKeyName = "selectedMapIndex";
+const mapList = "mapList";
+
 // テスト用データ
 const mapArray = [
   ["Map_01", "./img/sample01.jpg", [], 150, 50, 100],
   ["Map_02", "./img/sample02.jpg", [], 160, 100, 150],
   ["Map_03", "./img/sample03.jpg", [], 140, 80, 200],
 ];
-const selectedMapItemIndex = 2;
 
 // 操作
 // ロード時の操作
 $(window).on("load", function () {
-  maps.LoadMapList(mapArray, selectedMapItemIndex);
+  // 1. selectedMapIndex を取得する
+  let selectedMapIndex = localStorage.getItem(selectedMapIndexKeyName);
+  if (selectedMapIndex == null) {
+    selectedMapIndex = 0;
+  }
+
+  maps.LoadMapList(mapArray, selectedMapIndex);
 });
 
 // Map list のクリック時の操作

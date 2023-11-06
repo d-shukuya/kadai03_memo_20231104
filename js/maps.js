@@ -52,17 +52,20 @@ class Maps {
   }
 
   ChangeSelectedItem(clickedItemIndex) {
-    // 変更がない場合は何もしない
+    // 選択済みのマップをクリックした場合
     if (clickedItemIndex == this.#selectedItemIndex) {
       alert("これから実装する");
       return;
     }
 
+    // 未選択のマップをクリックした場合
+    // 画面表示の変更
     $("#map_list li").eq(this.#selectedItemIndex).removeClass(this.#selectedItemClassName);
     $("#map_list li").eq(clickedItemIndex).addClass(this.#selectedItemClassName);
-
     this.MapList[clickedItemIndex].LoadMapImgAndMemo();
-
     this.#selectedItemIndex = clickedItemIndex;
+
+    // localStorage への保存
+    localStorage.setItem(selectedMapIndexKeyName, this.#selectedItemIndex);
   }
 }
