@@ -55,44 +55,45 @@ class MapItem {
   }
 
   LoadMapImgAndMemo() {
+    // zoom スライダーの設定
+    $("#display_zoom_range").html(`zoom: ${this.#zoomValue} %`);
+    $("#zoom_range").val(this.#zoomValue);
+
     // 背景画像の表示
-    const mapItemImgHtml = `<img class="map_img" src=${this.#mapImgPath} alt="" />`;
+    const mapImg = $(`<img />`)
+      .attr({ class: "map_img", src: this.#mapImgPath })
+      .css({ width: this.CalImgWidthPx() });
     $("main").empty();
-    $("main").append(mapItemImgHtml);
-    this.LoadZoomRange();
-    this.LoadScrollPosition();
+    $("main").append(mapImg);
+    // スクロール位置の設定
+    mapImg.on("load", () => this.LoadScrollPosition());
 
     // メモアイコンの表示
   }
 
-  // 画像の倍率を変更する
-  LoadZoomRange() {
-    // zoom 倍率数の表示
-    const html = `zoom: ${this.#zoomValue} %`;
-    $("#display_zoom_range").html(html);
-
-    // マップ画像の倍率反映
-    const cal = (this.#baseImgWidth * this.#zoomValue) / 100;
-    const px = `${cal}px`;
-    $(".map_img").css("width", px);
-    $("#zoom_range").val(this.#zoomValue);
-  }
-
-  ChangeZoomRange(zoomVal) {
+  ResizeMapImgAndMemo(zoomVal) {
+    // zoom スライダーの設定
     this.#zoomValue = zoomVal;
-    this.LoadZoomRange();
+    $("#display_zoom_range").html(`zoom: ${zoomVal} %`);
+
+    // 背景画像の表示
+    const mapImg = $(`<img />`)
+      .attr({ class: "map_img", src: this.#mapImgPath })
+      .css({ width: this.CalImgWidthPx() });
+    $("main").empty();
+    $("main").append(mapImg);
+
+    // メモアイコンの表示
   }
 
+  // zoom倍率から画像幅を計算
+  CalImgWidthPx() {
+    return `${(this.#baseImgWidth * this.#zoomValue) / 100}`;
+  }
+
+  // スクロール位置の設定
   LoadScrollPosition() {
     $("main").scrollLeft(this.#scrollX);
     $("main").scrollTop(this.#scrollY);
-
-    // const elements = document.getElementsByTagName("main");
-    // elements[0].scrollTop = 100;
-    // elements[0].scrollLeft = 100;
-
-
-    console.log("scrollX", this.#scrollX);
-    console.log("scrollY", this.#scrollY);
   }
 }

@@ -42,8 +42,6 @@ class Maps {
     }
     const selectedItem = this.MapList[this.#selectedItemIndex];
     selectedItem.LoadMapImgAndMemo();
-    selectedItem.LoadZoomRange();
-    selectedItem.LoadScrollPosition();
     $("#map_list li").eq(this.#selectedItemIndex).addClass("selected_map_item");
   }
 
