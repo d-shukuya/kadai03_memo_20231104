@@ -75,10 +75,10 @@ nav {
     background-color: #25D195;
     color: #001B24;
     text-shadow: -1px 1px #CCE1DA;
-    cursor: pointer;
 }
 
 #add_map_btn:hover {
+    cursor: pointer;
     background-color: #CCE1DA;
 }
 
@@ -223,8 +223,7 @@ input[type="range"]::-moz-range-thumb:hover {
 
 main {
     grid-area: center;
-    overflow-x: auto;
-    overflow-y: auto;
+    overflow: auto;
 }
 
 .map_img {
