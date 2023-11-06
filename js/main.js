@@ -24,16 +24,17 @@ $("#map_list").on("click", "li", function () {
 
 // スライダー変更時の操作
 $("#zoom_range").on("input change", function () {
-  maps.MapList[maps.SelectedItemIndex].ResizeMapImgAndMemo($("#zoom_range").val());
+  maps.MapList[maps.SelectedItemIndex].ResizeMapImgAndMemo($(this).val());
 });
 
 // スクロール変更時の操作
 let timeOut;
 $("main").on("scroll", function () {
+  const main = $(this);
   clearTimeout(timeOut);
   timeOut = setTimeout(function () {
-    const scrollX = $("main").scrollLeft();
-    const scrollY = $("main").scrollTop();
+    const scrollX = main.scrollLeft();
+    const scrollY = main.scrollTop();
   }, 500);
 });
 

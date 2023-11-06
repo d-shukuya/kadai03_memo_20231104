@@ -1,4 +1,6 @@
 class Maps {
+  #selectedItemClassName = "selected_map_item";
+
   #selectedItemIndex = 0;
   set SelectedItemIndex(val) {
     this.#selectedItemIndex = val;
@@ -42,7 +44,7 @@ class Maps {
     }
     const selectedItem = this.MapList[this.#selectedItemIndex];
     selectedItem.LoadMapImgAndMemo();
-    $("#map_list li").eq(this.#selectedItemIndex).addClass("selected_map_item");
+    $("#map_list li").eq(this.#selectedItemIndex).addClass(this.#selectedItemClassName);
   }
 
   ShowMapList(name) {
@@ -56,8 +58,8 @@ class Maps {
       return;
     }
 
-    $("#map_list li").eq(this.#selectedItemIndex).removeClass("selected_map_item");
-    $("#map_list li").eq(clickedItemIndex).addClass("selected_map_item");
+    $("#map_list li").eq(this.#selectedItemIndex).removeClass(this.#selectedItemClassName);
+    $("#map_list li").eq(clickedItemIndex).addClass(this.#selectedItemClassName);
 
     this.MapList[clickedItemIndex].LoadMapImgAndMemo();
 
