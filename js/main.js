@@ -38,4 +38,18 @@ $("main").on("scroll", function () {
   }, 500);
 });
 
+// Mapを追加するボタン押下時の操作
+$("#add_map_btn").on("click", function () {
+  // 新規Map登録モーダルを表示
+  $("#create_map_area").fadeIn();
+});
+
+$("#create_map_area_overlay, #create_map_area_close, #create_map_cancel").on("click", function () {
+  // 新規Map登録モーダルを表示
+  $("#create_map_area").fadeOut();
+});
+
+$("#create_map_register").on("click", function () {
+});
+
 // 関数

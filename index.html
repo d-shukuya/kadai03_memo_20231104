@@ -26,6 +26,22 @@
     </aside>
     <main></main>
 
+    <!-- 新規Map登録モーダル -->
+    <div id="create_map_area">
+      <div id="create_map_area_overlay"></div>
+      <div id="create_map_area_body">
+        <div id="create_map_area_close">×</div>
+        <div id="create_map_form">
+          <p id="create_map_name_label">Map名</p>
+          <input id="create_map_name" type="text" placeholder="Map名を入力" />
+          <p id="create_map_path_label">Map画像のPath</p>
+          <input id="create_map_path" type="text" placeholder="Map画像のPathを入力" />
+          <div id="create_map_cancel" class="modal_button modal_button_cancel">キャンセル</div>
+          <div id="create_map_register" class="modal_button modal_button_register">登録</div>
+        </div>
+      </div>
+    </div>
+
     <!-- スクリプト読込 -->
     <script src="./js/jquery-2.1.3.min.js"></script>
     <script src="./js/memo_item.js"></script>
