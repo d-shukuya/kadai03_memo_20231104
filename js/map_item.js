@@ -2,9 +2,25 @@ class MapItem {
   #memoList = [];
   #baseImgWidth = 1580;
 
+  #mapKeyNum = "";
+  set MapKeyNum(val) {
+    if (val == null || val == "") {
+      this.#mapKeyNum = "M000";
+    } else {
+      this.#mapKeyNum = val;
+    }
+  }
+  get MapKeyNum() {
+    return this.#mapKeyNum;
+  }
+
   #mapName = "";
   set MapName(val) {
-    this.#mapName = val;
+    if (val == null) {
+      this.#mapName = "";
+    } else {
+      this.#mapName = val;
+    }
   }
   get MapName() {
     return this.#mapName;
@@ -12,7 +28,11 @@ class MapItem {
 
   #mapImgPath = "";
   set MapImgPath(val) {
-    this.#mapImgPath = val;
+    if (val == null) {
+      this.#mapImgPath = "";
+    } else {
+      this.#mapImgPath = val;
+    }
   }
   get MapImgPath() {
     return this.#mapImgPath;
@@ -20,7 +40,11 @@ class MapItem {
 
   #zoomValue = 100;
   set ZoomValue(val) {
-    this.#zoomValue = val;
+    if (val == null || val == "") {
+      this.#zoomValue = 100;
+    } else {
+      this.#zoomValue = val;
+    }
   }
   get ZoomValue() {
     return this.#zoomValue;
@@ -28,7 +52,11 @@ class MapItem {
 
   #scrollX = 0;
   set ScrollX(val) {
-    this.#scrollX = val;
+    if (val == null || val == "") {
+      this.#scrollX = 0;
+    } else {
+      this.#scrollX = val;
+    }
   }
   get ScrollX() {
     return this.#scrollX;
@@ -36,18 +64,23 @@ class MapItem {
 
   #scrollY = 0;
   set ScrollY(val) {
-    this.#scrollY = val;
+    if (val == null || val == "") {
+      this.#scrollY = 0;
+    } else {
+      this.#scrollY = val;
+    }
   }
   get ScrollY() {
     return this.#scrollY;
   }
 
-  constructor(name, path, zoomVal, x, y) {
-    this.#mapName = name;
-    this.#mapImgPath = path;
-    this.#zoomValue = zoomVal;
-    this.#scrollX = x;
-    this.#scrollY = y;
+  constructor(key, name, path, zoomVal, x, y) {
+    this.MapKeyNum = key;
+    this.MapName = name;
+    this.MapImgPath = path;
+    this.ZoomValue = zoomVal;
+    this.ScrollX = x;
+    this.ScrollY = y;
   }
 
   SetMemoItem(path, title, text, x, y) {
