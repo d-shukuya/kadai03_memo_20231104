@@ -27,17 +27,34 @@
     <main></main>
 
     <!-- 新規Map登録モーダル -->
-    <div id="create_map_area">
-      <div id="create_map_area_overlay"></div>
-      <div id="create_map_area_body">
-        <div id="create_map_area_close">×</div>
-        <div id="create_map_form">
-          <p id="create_map_name_label">Map名</p>
-          <input id="create_map_name" type="text" placeholder="Map名を入力" />
-          <p id="create_map_path_label">Map画像のPath</p>
-          <input id="create_map_path" type="text" placeholder="Map画像のPathを入力" />
-          <div id="create_map_cancel" class="modal_button modal_button_cancel">キャンセル</div>
-          <div id="create_map_register" class="modal_button modal_button_register">登録</div>
+    <div id="create_map_area" class="map_area_modal">
+      <div id="create_map_area_overlay" class="map_overlay_modal"></div>
+      <div id="create_map_area_body" class="map_body_modal">
+        <div id="create_map_area_close" class="map_close_modal">×</div>
+        <div id="create_map_form" class="map_form_modal">
+          <p id="create_map_name_label" class="map_name_label">Map名</p>
+          <input id="create_map_name" class="map_name" type="text" placeholder="Map名を入力" />
+          <p id="create_map_path_label" class="map_path_label">Map画像のPath</p>
+          <input id="create_map_path" class="map_path" type="text" placeholder="Map画像のPathを入力" />
+          <div id="create_map_cancel" class="modal_button">キャンセル</div>
+          <div id="create_map_register" class="modal_button">登録</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Map登録編集モーダル -->
+    <div id="edit_map_area" class="map_area_modal">
+      <div id="edit_map_area_overlay" class="map_overlay_modal"></div>
+      <div id="edit_map_area_body" class="map_body_modal">
+        <div id="edit_map_area_close" class="map_close_modal">×</div>
+        <div id="edit_map_form" class="map_form_modal">
+          <p id="edit_map_name_label" class="map_name_label">Map名</p>
+          <input id="edit_map_name" class="map_name" type="text" placeholder="Map名を入力" />
+          <p id="edit_map_path_label" class="map_path_label">Map画像のPath</p>
+          <input id="edit_map_path" class="map_path" type="text" placeholder="Map画像のPathを入力" />
+          <div id="edit_map_delete" class="modal_button">削除</div>
+          <div id="edit_map_cancel" class="modal_button">キャンセル</div>
+          <div id="edit_map_update" class="modal_button">更新</div>
         </div>
       </div>
     </div>

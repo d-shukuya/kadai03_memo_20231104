@@ -129,6 +129,4 @@ class MapItem {
     $("main").scrollLeft(this.#scrollX);
     $("main").scrollTop(this.#scrollY);
   }
-
-  // ストレージ保存用にJSON形式で出力
 }

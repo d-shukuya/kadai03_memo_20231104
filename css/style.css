@@ -232,7 +232,8 @@ main {
 }
 
 /* 新規Map登録モーダル */
-#create_map_area {
+/* Map登録編集モーダル */
+.map_area_modal {
     display: none;
     position: fixed;
     width: 100%;
@@ -242,7 +243,7 @@ main {
     overflow: auto;
 }
 
-#create_map_area_overlay {
+.map_overlay_modal {
     position: fixed;
     width: 100%;
     height: 100%;
@@ -251,13 +252,13 @@ main {
     background: rgba(0,0,0,0.7);
 }
 
-#create_map_area_body{
+.map_body_modal{
     width: 100%;
     height: 100%;
     display: flex;
 }
 
-#create_map_form{
+.map_form_modal{
     background: #FABD00;
     width: 600px;
     height: 400px;
@@ -271,7 +272,7 @@ main {
     box-shadow: -15px 20px #001B24;
 }
 
-#create_map_area_close {
+.map_close_modal {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     color: white;
     font-size: 60px;
@@ -290,35 +291,35 @@ main {
     overflow: hidden;
 }
 
-#create_map_area_overlay,
-#create_map_area_close {
+.map_overlay_modal,
+.map_close_modal {
     cursor: default;
 }
 
-#create_map_form>p,
-#create_map_form>input{
+.map_form_modal>p,
+.map_form_modal>input{
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     position: absolute;
     left: 80px;
 }
-#create_map_form>p{
+.map_form_modal>p{
     font-size: 24px;
     font-weight: bold;
 }
-#create_map_form>input {
+.map_form_modal>input {
     font-size: 18px;
     width: 440px;
 }
-#create_map_name_label {
+.map_name_label {
     top: 50px
 }
-#create_map_name {
+.map_name {
     top: 85px
 }
-#create_map_path_label{
+.map_path_label{
     top: 170px
 }
-#create_map_path{
+.map_path{
     top: 205px
 }
 .modal_button{
@@ -346,13 +347,28 @@ main {
     transform: translate(-3px, 5px);
 }
 
-.modal_button_cancel{
+#create_map_cancel{
     left: 130px;
     background: grey;
 }
 
-.modal_button_register {
+#create_map_register {
     left: 350px;
+    background: #25D195;
+}
+
+#edit_map_delete{
+    left: 80px;
+    background: #FE6832;
+}
+
+#edit_map_cancel{
+    left: 240px;
+    background: grey;
+}
+
+#edit_map_update {
+    left: 400px;
     background: #25D195;
 }
 
