@@ -1,4 +1,4 @@
-class Maps {
+class TopPage {
   #selectedItemClassName = "selected_map_item";
 
   #selectedMapIndex = 0;
@@ -16,7 +16,15 @@ class Maps {
   MapList = [];
 
   //ストレージからロード
-  LoadMapList(array) {
+  LoadMapList(arrayJson) {
+    // JSONのパース
+    let array;
+    if (arrayJson == null) {
+      array = [];
+    } else {
+      array = JSON.parse(arrayJson);
+    }
+
     // array が空なら処理をしない
     if (array.length == 0) {
       $("#display_zoom_range").html(`zoom: - %`);

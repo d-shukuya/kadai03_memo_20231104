@@ -1,3 +1,4 @@
+// MapItem クラス（マップのコンテンツを保持）
 class MapItem {
   #memoList = [];
   #baseImgWidth = 1580;
@@ -128,5 +129,29 @@ class MapItem {
   LoadScrollPosition() {
     $("main").scrollLeft(this.#scrollX);
     $("main").scrollTop(this.#scrollY);
+  }
+}
+
+// MapIndex クラス（マップ一覧の内容を保持）
+class MapIndex {
+  #mapKeyNum = ""; // 書式は「M001」
+  set MapKeyNum(val) {
+    this.#mapKeyNum = val;
+  }
+  get MapKeyNum() {
+    return this.#mapKeyNum;
+  }
+
+  #mapName = "";
+  set MapName(val) {
+    this.#mapName = val;
+  }
+  get MapName() {
+    return this.#mapName;
+  }
+
+  constructor(key, name) {
+    this.MapKeyNum = key;
+    this.MapName = name;
   }
 }
