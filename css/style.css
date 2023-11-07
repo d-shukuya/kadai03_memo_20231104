@@ -233,7 +233,11 @@ main {
 
 /* 新規Map登録モーダル */
 /* Map登録編集モーダル */
-.map_area_modal {
+/* Memo用モーダル */
+#memo_area {
+    display: flex;
+}
+.modal_area {
     display: none;
     position: fixed;
     width: 100%;
@@ -243,7 +247,7 @@ main {
     overflow: auto;
 }
 
-.map_overlay_modal {
+.modal_overlay {
     position: fixed;
     width: 100%;
     height: 100%;
@@ -252,14 +256,19 @@ main {
     background: rgba(0,0,0,0.7);
 }
 
-.map_body_modal{
+.modal_body{
     width: 100%;
     height: 100%;
     display: flex;
 }
 
-.map_form_modal{
+.modal_form {
     background: #FABD00;
+    border-radius: 10px;
+    box-shadow: -15px 20px #001B24;
+}
+
+.map_form_modal{
     width: 600px;
     height: 400px;
     position: absolute;
@@ -268,20 +277,24 @@ main {
     transform: translate(-50%, -50%);
     -webkit-transform: translate(-50%, -50%);
     -ms-transform: translate(-50%, -50%);
-    border-radius: 10px;
-    box-shadow: -15px 20px #001B24;
 }
 
-.map_close_modal {
+.memo_form_modal {
+    width: 1000px;
+    height: 600px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    -webkit-transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+}
+
+.modal_close {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     color: white;
     font-size: 60px;
     position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(305px, -220px);
-    -webkit-transform: translate(305px, -220px);
-    -ms-transform: translate(305px, -220px);
     width: 50px;
     height: 50px;
     display: flex;
@@ -291,8 +304,24 @@ main {
     overflow: hidden;
 }
 
-.map_overlay_modal,
-.map_close_modal {
+.map_modal_close {
+    top: 50%;
+    left: 50%;
+    transform: translate(305px, -220px);
+    -webkit-transform: translate(305px, -220px);
+    -ms-transform: translate(305px, -220px);
+}
+
+.memo_modal_close {
+    top: 50%;
+    left: 50%;
+    transform: translate(505px, -300px);
+    -webkit-transform: translate(505px, -300px);
+    -ms-transform: translate(505px, -300px);
+}
+
+.modal_overlay,
+.modal_close {
     cursor: default;
 }
 
@@ -347,40 +376,62 @@ main {
     transform: translate(-3px, 5px);
 }
 
+.grey_btn {
+    background: grey;
+}
+
+.green_btn {
+    background: #25D195;
+}
+
+.red_btn {
+    background: #FE6832;
+}
+
 #create_map_cancel{
     left: 130px;
-    background: grey;
 }
 
 #create_map_register {
     left: 350px;
-    background: #25D195;
 }
 
 #edit_map_delete{
     left: 80px;
-    background: #FE6832;
 }
 
 #edit_map_cancel{
     left: 240px;
-    background: grey;
 }
 
 #edit_map_update {
     left: 400px;
-    background: #25D195;
+}
+
+#memo_delete{
+    bottom: 20px;
+    left: 240px;
+}
+
+#memo_cancel{
+    bottom: 20px;
+    left: 440px;
+}
+
+#memo_update {
+    bottom: 20px;
+    left: 640px;
 }
 
 
 @media screen and (max-width: 600px) {
-    #create_map_form{
+    .map_form_modal{
         left: 0;
         transform: translate(0, -50%);
         -webkit-transform: translate(0, -50%);
         -ms-transform: translate(0, -50%);
     }
-    #create_map_area_close {
+    .map_modal_close {
         left: 0;
         transform: translate(605px, -220px);
         -webkit-transform: translate(605px, -220px);
@@ -389,13 +440,13 @@ main {
 }
 
 @media screen and (max-height: 400px) {
-    #create_map_form{
+    .map_form_modal{
         top: 0;
         transform: translate(-50%, 0);
         -webkit-transform: translate(-50%, 0);
         -ms-transform: translate(-50%, 0);
     }
-    #create_map_area_close {
+    .map_modal_close {
         top: 0;
         transform: translate(305px, -20px);
         -webkit-transform: translate(305px, -20px);
