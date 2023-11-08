@@ -59,12 +59,15 @@ $("#add_map_btn").on("click", function () {
 });
 
 // モーダルをキャンセル
-$(".modal_overlay, .modal_close, #create_map_cancel, #edit_map_cancel").on("click", function () {
-  // 1. 新規Map登録モーダルを閉じる
-  $(".map_name").val("");
-  $(".map_path").val("");
-  $(".modal_area").fadeOut();
-});
+$(".modal_overlay, .modal_close, #create_map_cancel, #edit_map_cancel, #memo_cancel").on(
+  "click",
+  function () {
+    // 1. 新規Map登録モーダルを閉じる
+    $(".map_name").val("");
+    $(".map_path").val("");
+    $(".modal_area").fadeOut();
+  }
+);
 
 // 登録ボタン押下時の処理
 $("#create_map_register").on("click", function () {

@@ -13,7 +13,7 @@
       <img src="./img/logo.png" alt="" />
       <div>
         <h1>MEMO</h1>
-        <p>Maps</p>
+        <label>Maps</label>
       </div>
     </header>
     <nav>
@@ -22,7 +22,7 @@
     </nav>
     <aside>
       <input type="range" name="zoom_range" id="zoom_range" min="0" max="200" step="10" />
-      <p id="display_zoom_range"></p>
+      <label id="display_zoom_range"></label>
     </aside>
     <main></main>
 
@@ -32,12 +32,17 @@
       <div id="create_map_area_body" class="modal_body">
         <div id="create_map_area_close" class="modal_close map_modal_close">×</div>
         <div id="create_map_form" class="modal_form map_form_modal">
-          <p id="create_map_name_label" class="map_name_label">Map名</p>
+          <label id="create_map_name_label" class="map_name_label">Map名</label>
           <input id="create_map_name" class="map_name" type="text" placeholder="Map名を入力" />
-          <p id="create_map_path_label" class="map_path_label">Map画像のPath</p>
-          <input id="create_map_path" class="map_path" type="text" placeholder="Map画像のPathを入力" />
-          <div id="create_map_cancel" class="modal_button grey_btn">キャンセル</div>
-          <div id="create_map_register" class="modal_button green_btn">登録</div>
+          <label id="create_map_path_label" class="map_path_label">Map画像のPath</label>
+          <input
+            id="create_map_path"
+            class="map_path"
+            type="text"
+            placeholder="Map画像のPathを入力"
+          />
+          <div id="create_map_cancel" class="modal_button_design grey_btn map_button_position">キャンセル</div>
+          <div id="create_map_register" class="modal_button_design green_btn map_button_position">登録</div>
         </div>
       </div>
     </div>
@@ -48,13 +53,18 @@
       <div id="edit_map_area_body" class="modal_body">
         <div id="edit_map_area_close" class="modal_close map_modal_close">×</div>
         <div id="edit_map_form" class="modal_form map_form_modal">
-          <p id="edit_map_name_label" class="map_name_label">Map名</p>
+          <label id="edit_map_name_label" class="map_name_label">Map名</label>
           <input id="edit_map_name" class="map_name" type="text" placeholder="Map名を入力" />
-          <p id="edit_map_path_label" class="map_path_label">Map画像のPath</p>
-          <input id="edit_map_path" class="map_path" type="text" placeholder="Map画像のPathを入力" />
-          <div id="edit_map_delete" class="modal_button red_btn">削除</div>
-          <div id="edit_map_cancel" class="modal_button grey_btn">キャンセル</div>
-          <div id="edit_map_update" class="modal_button green_btn">更新</div>
+          <label id="edit_map_path_label" class="map_path_label">Map画像のPath</label>
+          <input
+            id="edit_map_path"
+            class="map_path"
+            type="text"
+            placeholder="Map画像のPathを入力"
+          />
+          <div id="edit_map_delete" class="modal_button_design red_btn map_button_position">削除</div>
+          <div id="edit_map_cancel" class="modal_button_design grey_btn map_button_position">キャンセル</div>
+          <div id="edit_map_update" class="modal_button_design green_btn map_button_position">更新</div>
         </div>
       </div>
     </div>
@@ -65,11 +75,39 @@
       <div id="memo_area_body" class="modal_body">
         <div id="memo_area_close" class="modal_close memo_modal_close">×</div>
         <div id="memo_form" class="modal_form memo_form_modal">
-
-          
-          <!-- <div id="memo_delete" class="modal_button red_btn">削除</div>
-          <div id="memo_cancel" class="modal_button grey_btn">キャンセル</div>
-          <div id="memo_update" class="modal_button green_btn">更新</div> -->
+          <div id="memo_title_blk">
+            <label class="memo_label">Memo title</label>
+            <input class="memo_input" id="memo_title" type="text">
+          </div>
+          <div id="memo_icon_blk">
+            <ul>
+              <label class="memo_label">Icon</label>
+              <select class="memo_icon_selector">
+                <option value=""></option>
+                <option value=""></option>
+                <option value=""></option>
+                <option value=""></option>
+                <option value=""></option>
+              </select>
+            </ul>
+            <ul>
+              <label class="memo_label">Icon size</label>
+              <select class="memo_icon_selector">
+                <option value="">小</option>
+                <option value="">中</option>
+                <option value="">大</option>
+              </select>
+            </ul>
+          </div>
+          <div id="memo_text_blk">
+            <label for="memo_text" class="memo_label">Memo</label>
+            <textarea id="memo_text" class="memo_input" cols="30" rows="10"></textarea>
+          </div>
+          <div id="memo_btn_blk">
+            <div id="memo_delete" class="modal_button_design red_btn memo_btn">削除</div>
+            <div id="memo_cancel" class="modal_button_design grey_btn memo_btn">キャンセル</div>
+            <div id="memo_update" class="modal_button_design green_btn memo_btn">更新</div>
+          </div>
         </div>
       </div>
     </div>

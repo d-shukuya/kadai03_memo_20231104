@@ -48,7 +48,7 @@ header>div>h1 {
     text-shadow: -3px 5px #CCE1DA;
 }
 
-header>div>p {
+header>div>label {
     font-size: 30px;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     color: #001B24;
@@ -234,9 +234,9 @@ main {
 /* 新規Map登録モーダル */
 /* Map登録編集モーダル */
 /* Memo用モーダル */
-/* #memo_area {
+#memo_area {
     display: flex;
-} */
+}
 .modal_area {
     display: none;
     position: fixed;
@@ -290,6 +290,81 @@ main {
     -ms-transform: translate(-50%, -50%);
 }
 
+#memo_form{
+    display: grid;
+    grid-template:
+        "title_blk icon_blk" 100px
+        "text_blk  text_blk" 1fr
+        "btn_blk   btn_blk"  80px
+    /    1fr       300px
+}
+
+#memo_title_blk {
+    grid-area: title_blk;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 0px 40px;
+}
+
+#memo_icon_blk {
+    grid-area: icon_blk;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+#memo_text_blk {
+    grid-area: text_blk;
+    display: flex;
+    flex-direction: column;
+    padding: 10px 40px;
+}
+
+#memo_btn_blk {
+    grid-area: btn_blk;
+    display: flex;
+    position: relative;
+    justify-content: space-evenly;
+    align-items: start;
+    padding: 5px;
+}
+
+.memo_label {
+    display: inline-block;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 24px;
+    font-weight: bold;
+    width: 120px;
+    height: 40px;
+    line-height: 40px;
+}
+
+.memo_input,
+.memo_icon_selector {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 18px;
+}
+
+#memo_title {
+    height: 40px;
+}
+
+#memo_icon_blk>ul {
+    display: flex;
+    position: relative;
+    align-items: center;
+}
+
+.memo_icon_selector {
+    width: 150px;
+    height: 30px;
+}
+
+#memo_text {
+    height: 100%;
+}
+
 .modal_close {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     color: white;
@@ -325,13 +400,13 @@ main {
     cursor: default;
 }
 
-.map_form_modal>p,
+.map_form_modal>label,
 .map_form_modal>input{
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     position: absolute;
     left: 80px;
 }
-.map_form_modal>p{
+.map_form_modal>label{
     font-size: 24px;
     font-weight: bold;
 }
@@ -351,7 +426,7 @@ main {
 .map_path{
     top: 205px
 }
-.modal_button{
+.modal_button_design{
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     width: 120px;
     height: 50px;
@@ -361,19 +436,22 @@ main {
     display: flex;
     justify-content: center;
     align-items: center;
-    position: absolute;
-    bottom: 50px;
     color: #001B24;
     font-weight: bold;
 }
 
-.modal_button:hover{
+.modal_button_design:hover{
     cursor: pointer;
 }
 
-.modal_button:active {
+.modal_button_design:active {
     box-shadow: none;
     transform: translate(-3px, 5px);
+}
+
+.map_button_position {
+    position: absolute;
+    bottom: 50px;
 }
 
 .grey_btn {
@@ -407,22 +485,6 @@ main {
 #edit_map_update {
     left: 400px;
 }
-
-#memo_delete{
-    bottom: 20px;
-    left: 240px;
-}
-
-#memo_cancel{
-    bottom: 20px;
-    left: 440px;
-}
-
-#memo_update {
-    bottom: 20px;
-    left: 640px;
-}
-
 
 @media screen and (max-width: 600px) {
     .map_form_modal{
