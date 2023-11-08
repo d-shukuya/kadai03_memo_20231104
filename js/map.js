@@ -2,6 +2,7 @@
 class MapItem {
   #memoList = [];
   #baseImgWidth = 1580;
+  #mapImgClassName = "map_img";
 
   #mapKeyNum = "";
   set MapKeyNum(val) {
@@ -13,18 +14,6 @@ class MapItem {
   }
   get MapKeyNum() {
     return this.#mapKeyNum;
-  }
-
-  #mapName = "";
-  set MapName(val) {
-    if (val == null) {
-      this.#mapName = "";
-    } else {
-      this.#mapName = val;
-    }
-  }
-  get MapName() {
-    return this.#mapName;
   }
 
   #mapImgPath = "";
@@ -75,60 +64,97 @@ class MapItem {
     return this.#scrollY;
   }
 
-  constructor(key, name, path, zoomVal, x, y) {
+  constructor(key, path, zoomVal, x, y) {
     this.MapKeyNum = key;
-    this.MapName = name;
     this.MapImgPath = path;
     this.ZoomValue = zoomVal;
     this.ScrollX = x;
     this.ScrollY = y;
   }
 
-  SetMemoItem(path, title, text, x, y) {
-    this.#memoList.push(new MemoItem(path, title, text, x, y));
+  ResetScreenSetting() {
+    this.ZoomValue = 100;
+    this.ScrollX = 0;
+    this.ScrollY = 0;
   }
 
-  LoadMapImgAndMemo() {
-    // zoom スライダーの設定
-    $("#display_zoom_range").html(`zoom: ${this.#zoomValue} %`);
-    $("#zoom_range").val(this.#zoomValue);
+  ShowMapImg() {
+    // エラー処理
+    if (this.MapImgPath == "") {
+      $("#display_zoom_range").html(`zoom: - %`);
+      $("#zoom_range").val(100);
+      return;
+    }
 
-    // 背景画像の表示
+    // 1. zoom スライダーの設定
+    $("#display_zoom_range").html(`zoom: ${this.ZoomValue} %`);
+    $("#zoom_range").val(this.ZoomValue);
+
+    // 2. 背景画像の表示
     const mapImg = $(`<img />`)
-      .attr({ class: "map_img", src: this.#mapImgPath })
+      .attr({ class: this.#mapImgClassName, src: this.#mapImgPath })
       .css({ width: this.CalImgWidthPx() });
     $("main").empty();
     $("main").append(mapImg);
-    // スクロール位置の設定
-    mapImg.on("load", () => this.LoadScrollPosition());
 
-    // メモアイコンの表示
+    // 3. スクロール位置の設定
+    mapImg.on("load", () => this.LoadScrollPosition());
   }
 
-  ResizeMapImgAndMemo(zoomVal) {
-    // zoom スライダーの設定
-    this.#zoomValue = zoomVal;
+  ResizeMapImg(zoomVal) {
+    // 1. zoom スライダーの設定
+    this.ZoomValue = zoomVal;
     $("#display_zoom_range").html(`zoom: ${zoomVal} %`);
 
-    // 背景画像の表示
-    const mapImg = $(`<img />`)
-      .attr({ class: "map_img", src: this.#mapImgPath })
-      .css({ width: this.CalImgWidthPx() });
-    $("main").empty();
-    $("main").append(mapImg);
+    // 2. localStorage を更新
+    this.SetMapCntToStorage();
 
-    // メモアイコンの表示
+    // 2. 背景画像の表示サイズを変更
+    $(`.${this.#mapImgClassName}`).css("width", this.CalImgWidthPx());
   }
 
   // zoom倍率から画像幅を計算
   CalImgWidthPx() {
-    return `${(this.#baseImgWidth * this.#zoomValue) / 100}`;
+    return `${(this.#baseImgWidth * this.ZoomValue) / 100}`;
   }
 
   // スクロール位置の設定
   LoadScrollPosition() {
     $("main").scrollLeft(this.#scrollX);
     $("main").scrollTop(this.#scrollY);
+  }
+
+  // localStorage との通信用メソッド
+  // mapCnt を localStorage からロード
+  LoadMapCntFromStorage(mapKeyNum) {
+    // 1. localStorage からロード
+    const arrayJson = localStorage.getItem(GetMapCntKeyName(mapKeyNum));
+
+    // array が空なら処理をしない
+    if (arrayJson == null || arrayJson.length == 0) return;
+
+    // JSONのパース
+    let array = JSON.parse(arrayJson);
+
+    // ロードした値を MapItem オブジェクトへマッピング
+    this.MapKeyNum = array[0];
+    this.MapImgPath = array[1];
+    this.ZoomValue = array[2];
+    this.ScrollX = array[3];
+    this.ScrollY = array[4];
+  }
+
+  // mapCnt を LocalStorage へ保存
+  SetMapCntToStorage() {
+    localStorage.setItem(
+      GetMapCntKeyName(this.MapKeyNum),
+      JSON.stringify([this.MapKeyNum, this.MapImgPath, this.ZoomValue, this.ScrollX, this.ScrollY])
+    );
+  }
+
+  // mapCnt を LocalStorage から削除する
+  DeleteMapCntToStorage(mapKeyNum) {
+    localStorage.removeItem(GetMapCntKeyName(mapKeyNum));
   }
 }
 

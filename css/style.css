@@ -234,9 +234,9 @@ main {
 /* 新規Map登録モーダル */
 /* Map登録編集モーダル */
 /* Memo用モーダル */
-#memo_area {
+/* #memo_area {
     display: flex;
-}
+} */
 .modal_area {
     display: none;
     position: fixed;

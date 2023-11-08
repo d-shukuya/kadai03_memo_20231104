@@ -1,10 +1,18 @@
 class TopPage {
-  #selectedItemClassName = "selected_map_item";
+  // プロパティ
+  // HTML要素のクラス名
+  #selectedMapClassName = "selected_map_item";
 
+  // 表示されているマップ一覧
+  MapList = [];
+
+  // マップ一覧内の選択されている Map のインデックス
   #selectedMapIndex = 0;
   set SelectedMapIndex(val) {
     if (val == null || val == "" || val < 0) {
       this.#selectedMapIndex = 0;
+      // インデックスの値をストレージに再セット
+      this.SetSelectedMapIndexToStorage();
     } else {
       this.#selectedMapIndex = val;
     }
@@ -13,72 +21,63 @@ class TopPage {
     return this.#selectedMapIndex;
   }
 
-  MapList = [];
+  // 選択されている Map
+  CurrentMapItem = new MapItem("", "", 100, 0, 0);
 
-  //ストレージからロード
-  LoadMapList(arrayJson) {
-    // JSONのパース
-    let array;
-    if (arrayJson == null) {
-      array = [];
-    } else {
-      array = JSON.parse(arrayJson);
-    }
+  // メソッド
+  // トップ画面のロード処理
+  LoadTopPage() {
+    // 1. selectedMapIndex をロード
+    this.LoadSelectedMapIndexFromStorage();
 
-    // array が空なら処理をしない
-    if (array.length == 0) {
+    // 2. MapList のロード & 表示
+    this.LoadMapAryFromStorage();
+    if (this.MapList.length == 0) {
       $("#display_zoom_range").html(`zoom: - %`);
       $("#zoom_range").val(100);
       return;
     }
+    this.ShowMapList();
 
-    // ロードしたインデックスの値をストレージに再セット
-    this.SetSelectedMapIndexToStorage(this.#selectedMapIndex);
+    // 3. Map 本体のロード & 表示
+    this.CurrentMapItem = new MapItem("", "", 100, 0, 0);
+    this.CurrentMapItem.LoadMapCntFromStorage(this.MapList[this.SelectedMapIndex].MapKeyNum);
+    this.CurrentMapItem.ShowMapImg();
 
-    // ロードした値をオブジェクトへマッピング
-    for (let i = 0; i < array.length; i++) {
-      const mapItem = new MapItem(
-        array[i][0],
-        array[i][1],
-        array[i][2],
-        array[i][3],
-        array[i][4],
-        array[i][5]
-      );
-      this.MapList.push(mapItem);
-      this.ShowMapList(array[i][1]);
-    }
-
-    const selectedItem = this.MapList[this.#selectedMapIndex];
-    selectedItem.LoadMapImgAndMemo();
-    $("#map_list li").eq(this.#selectedMapIndex).addClass(this.#selectedItemClassName);
+    // 4. MemoList のロード
   }
 
-  ShowMapList(name) {
-    $("#map_list").append(`<li>${name}</li>`);
+  // マップリストを画面表示する
+  ShowMapList() {
+    $("#map_list").empty();
+    this.MapList.forEach((mapIndex) => {
+      $("#map_list").append(`<li>${mapIndex.MapName}</li>`);
+    });
+    $("#map_list li").eq(this.SelectedMapIndex).addClass(this.#selectedMapClassName);
   }
 
-  DeleteMapList() {}
+  ChangeSelectedMap(clickedMapIndex) {
+    const oldIndex = this.SelectedMapIndex;
+    const newIndex = clickedMapIndex;
 
-  ChangeSelectedItem(clickedItemIndex) {
-    // 画面表示の変更
-    $("#map_list li").eq(this.#selectedMapIndex).removeClass(this.#selectedItemClassName);
-    $("#map_list li").eq(clickedItemIndex).addClass(this.#selectedItemClassName);
-    this.MapList[clickedItemIndex].LoadMapImgAndMemo();
-    this.#selectedMapIndex = clickedItemIndex;
+    // 1. SelectedMapIndex の更新
+    this.SelectedMapIndex = newIndex;
+    this.SetSelectedMapIndexToStorage();
 
-    // localStorage への保存
-    this.SetSelectedMapIndexToStorage(this.#selectedMapIndex);
+    // 2. 選択された Map 本体のロード
+    if (this.MapList.length == 0) return;
+    this.CurrentMapItem = new MapItem("", "", 100, 0, 0);
+    this.CurrentMapItem.LoadMapCntFromStorage(this.MapList[newIndex].MapKeyNum);
+
+    // 3. 画面表示の更新
+    $("#map_list li").eq(oldIndex).removeClass(this.#selectedMapClassName);
+    $("#map_list li").eq(newIndex).addClass(this.#selectedMapClassName);
+    this.CurrentMapItem.ShowMapImg();
   }
 
-  // localStorage への保存
-  SetSelectedMapIndexToStorage(index) {
-    localStorage.setItem(selectedMapIndexKeyName, index);
-  }
-
-  // MapItem新規作成時の作成処理
-  NewMapItemAndSetMapList(name, path) {
-    // mapKeyNum の採番
+  // Map の新規作成処理
+  CreateNewMap(name, path) {
+    // 1. mapKeyNum の採番
     let keyNum = "";
     if (this.MapList.length == 0) {
       keyNum = "M001";
@@ -91,72 +90,129 @@ class TopPage {
       }
     }
 
-    // MapItem の生成 & MapList に追加
-    const item = new MapItem(keyNum, name, path, 100, 0, 0);
-    this.MapList.push(item);
+    // 2. MapItem の作成 と MapList への追加
+    this.MapList.push(new MapIndex(keyNum, name));
+    this.SelectedMapIndex = this.MapList.length - 1;
+    this.CurrentMapItem = new MapItem(keyNum, path, 100, 0, 0);
 
-    // 追加したリストを表示
-    this.ShowMapList(name);
+    // 3. localStorage へ登録
+    this.SetSelectedMapIndexToStorage();
+    this.SetMapAryToStorage();
+    this.CurrentMapItem.SetMapCntToStorage();
 
-    // selectedItem をセットし、画像を表示
-    this.ChangeSelectedItem(this.MapList.length - 1);
+    // 4. 画面表示
+    this.ShowMapList();
+    this.CurrentMapItem.ShowMapImg();
   }
 
   // MapItem更新時の処理
   UpdateMapItem(name, path) {
-    // 対象の MapItem を取得
-    const item = this.MapList[this.SelectedMapIndex];
+    // マップ名に変更がある場合
+    const currentMapIndex = this.MapList[this.SelectedMapIndex];
+    if (name != currentMapIndex.MapName) {
+      // 1. オブジェクトの更新
+      currentMapIndex.MapName = name;
 
-    // リスト表示の更新
-    item.MapName = name;
-    $(".selected_map_item").html(name);
+      // 2. localStorage の更新
+      this.SetMapAryToStorage();
 
-    // 画像の表示
-    if (item.MapImgPath != path) {
-      item.MapImgPath = path;
-      item.ZoomValue = 100;
-      item.ScrollX = 0;
-      item.ScrollY = 0;
-      item.LoadMapImgAndMemo();
+      // 3. 画面表示の更新
+      $(".selected_map_item").html(name);
+    }
+
+    // マップ画像のパスに変更がある場合
+    if (path != this.CurrentMapItem.MapImgPath) {
+      // 1. オブジェクトの更新
+      this.CurrentMapItem.MapImgPath = path;
+      this.CurrentMapItem.ResetScreenSetting();
+
+      // 2. localStorage の更新
+      this.CurrentMapItem.SetMapCntToStorage();
+
+      // 3. 画面表示の更新
+      this.CurrentMapItem.ShowMapImg();
     }
   }
 
   // MapItem削除時の処理
   deleteMapItem() {
-    // 対象の MapItem をリストから削除
-    this.MapList.splice(this.SelectedMapIndex, 1);
-    $(`.${this.#selectedItemClassName}`).remove();
-
-    // SelectedMapを一つ上に変更
-    if (this.SelectedMapIndex <= 0) {
-      this.SelectedMapIndex = 0;
+    // 1. 新しい SelectedMapIndex を一つ上に設定
+    let oldIndex = this.SelectedMapIndex;
+    let newIndex = 0;
+    if (oldIndex <= 0) {
+      newIndex = 0;
     } else {
-      this.SelectedMapIndex--;
+      newIndex = oldIndex - 1;
     }
+    this.SelectedMapIndex = newIndex;
+    this.SetSelectedMapIndexToStorage();
 
-    // 画面表示の変更
+    let oldMapKeyNum = this.MapList[oldIndex].MapKeyNum;
+    let newMapKeyNum = this.MapList[newIndex].MapKeyNum;
+
+    // 2. 対象の MapIndex をリストから削除
+    this.MapList.splice(oldIndex, 1);
+    $(`.${this.#selectedMapClassName}`).remove();
+    this.SetMapAryToStorage();
+
+    // 3. 画面表示の変更
     if (this.MapList.length == 0) {
       $("#display_zoom_range").html(`zoom: - %`);
       $("#zoom_range").val(100);
       $("main").empty();
     } else {
-      $("#map_list li").eq(this.SelectedMapIndex).addClass(this.#selectedItemClassName);
-      this.MapList[this.SelectedMapIndex].LoadMapImgAndMemo();
+      // 3-1. localStorage から MapItem を取得する
+      this.CurrentMapItem = new MapItem("", "", 100, 0, 0);
+      this.CurrentMapItem.LoadMapCntFromStorage(newMapKeyNum);
+
+      // 3-2. 画面表示
+      $("#map_list li").eq(newIndex).addClass(this.#selectedMapClassName);
+      this.CurrentMapItem.ShowMapImg();
     }
 
-    // localStorage への保存
-    this.SetSelectedMapIndexToStorage(this.#selectedMapIndex);
+    // mapCnt を LocalStorage から削除する
+    this.CurrentMapItem.DeleteMapCntToStorage(oldMapKeyNum);
   }
 
-  // localStorage への登録する value を返す
-  GetValueToRegisterLocalStorage() {
-    if (this.MapList.length == 0) {
-      return JSON.stringify([]);
-    } else {
-      let array = this.MapList.map((e) => {
-        return [e.MapKeyNum, e.MapName, e.MapImgPath, e.ZoomValue, e.ScrollX, e.ScrollY];
-      });
-      return JSON.stringify(array);
+  // localStorage との通信用メソッド
+  // selectedMapIndex を localStorage からロード
+  LoadSelectedMapIndexFromStorage() {
+    this.SelectedMapIndex = localStorage.getItem(selectedMapIndexKeyName);
+  }
+
+  // selectedMapIndex を localStorage へ保存
+  SetSelectedMapIndexToStorage() {
+    localStorage.setItem(selectedMapIndexKeyName, this.SelectedMapIndex);
+  }
+
+  // mapAry を localStorage からロード
+  LoadMapAryFromStorage() {
+    // localStorage からロード
+    const arrayJson = localStorage.getItem(mapArrayKeyName);
+
+    // array が空なら処理をしない
+    if (arrayJson == null || arrayJson.length == 0) {
+      this.MapList = [];
+      return;
     }
+
+    // JSONのパース
+    let array = JSON.parse(arrayJson);
+
+    // ロードした値を MapIndex オブジェクトへマッピング
+    array.forEach((e) => {
+      this.MapList.push(new MapIndex(e[0], e[1]));
+    });
+  }
+
+  // mapAry を localStorage へ保存
+  SetMapAryToStorage() {
+    let array = [];
+    if (this.MapList.length != 0) {
+      this.MapList.forEach((mapIndex) => {
+        array.push([mapIndex.MapKeyNum, mapIndex.MapName]);
+      });
+    }
+    localStorage.setItem(mapArrayKeyName, JSON.stringify(array));
   }
 }
