@@ -21,10 +21,18 @@
       <ul id="map_list"></ul>
     </nav>
     <aside>
-      <input type="range" name="zoom_range" id="zoom_range" min="0" max="200" step="10" />
+      <input type="range" name="zoom_range" id="zoom_range" min="10" max="200" step="10" />
       <label id="display_zoom_range"></label>
     </aside>
-    <main></main>
+    <main>
+      <div id="map_img_blk">
+        <!-- <img class="map_img" src="./img/sample01.jpg" alt=""> -->
+      </div>
+      <!-- <div class="icon_pin_set">
+        <img class="icon_pin" src="./img/01_hamburger.png" alt="" />
+        <label class="icon_pin_label">アイコン</label>
+      </div> -->
+    </main>
 
     <!-- 新規Map登録モーダル -->
     <div id="create_map_area" class="modal_area">
@@ -41,8 +49,12 @@
             type="text"
             placeholder="Map画像のPathを入力"
           />
-          <div id="create_map_cancel" class="modal_button_design grey_btn map_button_position">キャンセル</div>
-          <div id="create_map_register" class="modal_button_design green_btn map_button_position">登録</div>
+          <div id="create_map_cancel" class="modal_button_design grey_btn map_button_position">
+            キャンセル
+          </div>
+          <div id="create_map_register" class="modal_button_design green_btn map_button_position">
+            登録
+          </div>
         </div>
       </div>
     </div>
@@ -62,9 +74,15 @@
             type="text"
             placeholder="Map画像のPathを入力"
           />
-          <div id="edit_map_delete" class="modal_button_design red_btn map_button_position">削除</div>
-          <div id="edit_map_cancel" class="modal_button_design grey_btn map_button_position">キャンセル</div>
-          <div id="edit_map_update" class="modal_button_design green_btn map_button_position">更新</div>
+          <div id="edit_map_delete" class="modal_button_design red_btn map_button_position">
+            削除
+          </div>
+          <div id="edit_map_cancel" class="modal_button_design grey_btn map_button_position">
+            キャンセル
+          </div>
+          <div id="edit_map_update" class="modal_button_design green_btn map_button_position">
+            更新
+          </div>
         </div>
       </div>
     </div>
@@ -76,26 +94,31 @@
         <div id="memo_area_close" class="modal_close memo_modal_close">×</div>
         <div id="memo_form" class="modal_form memo_form_modal">
           <div id="memo_title_blk">
-            <label class="memo_label">Memo title</label>
-            <input class="memo_input" id="memo_title" type="text">
+            <label class="memo_label">Title</label>
+            <input class="memo_input" id="memo_title" type="text" />
+          </div>
+          <div id="memo_icon_img_blk">
+            <img src="./img/01_hamburger.png" alt="" />
           </div>
           <div id="memo_icon_blk">
             <ul>
               <label class="memo_label">Icon</label>
-              <select class="memo_icon_selector">
-                <option value=""></option>
-                <option value=""></option>
-                <option value=""></option>
-                <option value=""></option>
-                <option value=""></option>
+              <select id="icon_type_selector" class="memo_icon_selector">
+                <option value="01">01 Hamburger</option>
+                <option value="02">02 French-fries</option>
+                <option value="03">03 Hotdog</option>
+                <option value="04">04 Pizza</option>
+                <option value="05">05 Popcorn</option>
+                <option value="06">06 Coffee</option>
+                <option value="07">07 Juice</option>
               </select>
             </ul>
             <ul>
               <label class="memo_label">Icon size</label>
-              <select class="memo_icon_selector">
-                <option value="">小</option>
-                <option value="">中</option>
-                <option value="">大</option>
+              <select id="icon_size_selector" class="memo_icon_selector">
+                <option value="01">小</option>
+                <option value="02">中</option>
+                <option value="03">大</option>
               </select>
             </ul>
           </div>
@@ -106,7 +129,7 @@
           <div id="memo_btn_blk">
             <div id="memo_delete" class="modal_button_design red_btn memo_btn">削除</div>
             <div id="memo_cancel" class="modal_button_design grey_btn memo_btn">キャンセル</div>
-            <div id="memo_update" class="modal_button_design green_btn memo_btn">更新</div>
+            <div id="memo_save" class="modal_button_design green_btn memo_btn">保存</div>
           </div>
         </div>
       </div>

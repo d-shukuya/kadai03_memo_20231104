@@ -45,6 +45,8 @@ class TopPage {
     this.CurrentMapItem.ShowMapImg();
 
     // 4. MemoList のロード
+    this.CurrentMapItem.LoadMemAryFromStorage();
+    this.CurrentMapItem.ShowMemoIcon();
   }
 
   // マップリストを画面表示する
@@ -90,7 +92,7 @@ class TopPage {
       }
     }
 
-    // 2. MapItem の作成 と MapList への追加
+    // 2. MapIndex の作成 と MapList への追加
     this.MapList.push(new MapIndex(keyNum, name));
     this.SelectedMapIndex = this.MapList.length - 1;
     this.CurrentMapItem = new MapItem(keyNum, path, 100, 0, 0);
@@ -159,7 +161,7 @@ class TopPage {
     if (this.MapList.length == 0) {
       $("#display_zoom_range").html(`zoom: - %`);
       $("#zoom_range").val(100);
-      $("main").empty();
+      $("#map_img_blk").empty();
     } else {
       // 3-1. localStorage から MapItem を取得する
       this.CurrentMapItem = new MapItem("", "", 100, 0, 0);

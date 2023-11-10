@@ -224,19 +224,86 @@ input[type="range"]::-moz-range-thumb:hover {
 main {
     grid-area: center;
     overflow: auto;
+    position: relative;
+    display: flex;
+}
+
+#map_img_blk {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    display: flex;
 }
 
 .map_img {
     width: 1580px;
     height: auto;
+    position: absolute;
+    z-index: 1;
+}
+
+.icon_pin_set {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    top: 100px;
+    left: 100px;
+    /* background: white; */
+    z-index: 1;
+    width: 100px;
+    height: 80px;
+    /* display: none; */
+}
+
+.icon_pin_label {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 16px;
+    font-weight: bold;
+    max-width: 200px;
+    width: auto;
+    height: auto;
+    position: absolute;
+    text-align: center;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    background: #CCE1DA;
+    border-radius: 7px;
+    padding: 0px 5px;
+    box-shadow: -3px 5px #001B24;
+}
+
+.icon_pin {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    position: absolute;
+    transform: translate(0px, 10px);
+    -webkit-transform: translate(0px, 10px);
+    -ms-transform: translate(0px, 10px);
+    filter: drop-shadow(-3px 5px #001B24);
+}
+
+.large_pin {
+    width: 200px;
+    height: 160px;
+    transform: translate(0px, 0px);
+    -webkit-transform: translate(0px, 0px);
+    -ms-transform: translate(0px, 0px);
+}
+
+.small_pin {
+    width: 50px;
+    height: 40px;
+    transform: translate(0px, 20px);
+    -webkit-transform: translate(0px, 20px);
+    -ms-transform: translate(0px, 20px);
 }
 
 /* 新規Map登録モーダル */
 /* Map登録編集モーダル */
 /* Memo用モーダル */
-#memo_area {
-    display: flex;
-}
 .modal_area {
     display: none;
     position: fixed;
@@ -245,6 +312,7 @@ main {
     top: 0;
     left: 0;
     overflow: auto;
+    z-index: 10;
 }
 
 .modal_overlay {
@@ -280,7 +348,7 @@ main {
 }
 
 .memo_form_modal {
-    width: 1000px;
+    width: 1200px;
     height: 600px;
     position: absolute;
     top: 50%;
@@ -293,10 +361,10 @@ main {
 #memo_form{
     display: grid;
     grid-template:
-        "title_blk icon_blk" 100px
-        "text_blk  text_blk" 1fr
-        "btn_blk   btn_blk"  80px
-    /    1fr       300px
+        "title_blk icon_img_blk icon_blk" 100px
+        "text_blk  text_blk     text_blk" 1fr
+        "btn_blk   btn_blk      btn_blk"  80px
+    /    1fr       100px        300px
 }
 
 #memo_title_blk {
@@ -304,14 +372,26 @@ main {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    padding: 0px 40px;
+    padding: 0px 10px 0px 40px;
+}
+
+#memo_icon_img_blk {
+    grid-area: icon_img_blk;
+    display: flex;
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+    transform: translate(0, 15px);
+    -webkit-transform: translate(0, 15px);
+    -ms-transform: translate(0, 15px);
 }
 
 #memo_icon_blk {
     grid-area: icon_blk;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: end;
+    padding: 0px 40px 0px 10px;
 }
 
 #memo_text_blk {
@@ -344,6 +424,7 @@ main {
 .memo_icon_selector {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     font-size: 18px;
+    font-weight: bold;
 }
 
 #memo_title {
@@ -359,6 +440,10 @@ main {
 .memo_icon_selector {
     width: 150px;
     height: 30px;
+}
+
+#memo_icon_img_blk>img {
+    filter: drop-shadow(-3px 5px #001B24);
 }
 
 #memo_text {
@@ -390,9 +475,9 @@ main {
 .memo_modal_close {
     top: 50%;
     left: 50%;
-    transform: translate(505px, -300px);
-    -webkit-transform: translate(505px, -300px);
-    -ms-transform: translate(505px, -300px);
+    transform: translate(605px, -300px);
+    -webkit-transform: translate(605px, -300px);
+    -ms-transform: translate(605px, -300px);
 }
 
 .modal_overlay,
@@ -514,6 +599,10 @@ main {
         -webkit-transform: translate(305px, -20px);
         -ms-transform: translate(305px, -20px);
     }
+}
+
+@media screen and (max-width: 1200px) {
+    
 }
 
 

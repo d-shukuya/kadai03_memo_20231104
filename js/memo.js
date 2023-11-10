@@ -13,7 +13,11 @@ class MemoItem {
 
   #memoText = "";
   set MemoText(val) {
-    this.#memoText = val;
+    if (val == null) {
+      this.#memoText = "";
+    } else {
+      this.#memoText = val;
+    }
   }
   get MemoText() {
     return this.#memoText;
@@ -23,9 +27,18 @@ class MemoItem {
     this.MemoKeyNum = key;
     this.MemoText = text;
   }
+
+  // localStorage との通信用メソッド
+  // MemoItem を localStorage へ保存
+  SetMemCntToStorage() {
+    localStorage.setItem(GetMemCntKeyName(this.MemoKeyNum), this.MemoText);
+  }
 }
 
 class MemoIndex {
+  // Memoの本文
+  MemoCnt = new MemoItem("", "");
+
   #memoKeyNum = "";
   set MemoKeyNum(val) {
     if (val == null || val == "") {
@@ -62,28 +75,53 @@ class MemoIndex {
     return this.#iconSize;
   }
 
-  #positionX = "";
-  set PositionX(val) {
-    this.#positionX = val;
+  #iconTopRatio = "";
+  set IconTopRatio(val) {
+    this.#iconTopRatio = val;
   }
-  get PositionX() {
-    return this.#positionX;
-  }
-
-  #positionY = "";
-  set PositionY(val) {
-    this.#positionY = val;
-  }
-  get PositionY() {
-    return this.#positionY;
+  get IconTopRatio() {
+    return this.#iconTopRatio;
   }
 
-  constructor(key, title, type, size, x, y) {
+  #iconLeftRatio = "";
+  set IconLeftRatio(val) {
+    this.#iconLeftRatio = val;
+  }
+  get IconLeftRatio() {
+    return this.#iconLeftRatio;
+  }
+
+  constructor(key, title, type, size, top, left) {
     this.MemoKeyNum = key;
     this.MemoTitle = title;
     this.IconType = type;
     this.IconSize = size;
-    this.PositionX = x;
-    this.PositionY = y;
+    this.IconTopRatio = top;
+    this.IconLeftRatio = left;
+  }
+
+  ReconvertTopFromRatio(zoomVal) {
+    return this.IconTopRatio * zoomVal;
+  }
+  ReconvertLeftFromRatio(zoomVal) {
+    return this.IconLeftRatio * zoomVal;
+  }
+
+  CreateMemoCnt(text) {
+    // 1. MemoItem の作成
+    this.MemoCnt = new MemoItem(this.MemoKeyNum, text);
+
+    // 2. localStorage へ登録
+    this.MemoCnt.SetMemCntToStorage();
+  }
+
+  // localStorage との通信用メソッド
+  // MemoItem を localStorage からロード
+  LoadMemCntFromStorage() {
+    // 1. localStorage からロード
+    const text = localStorage.getItem(GetMemCntKeyName(this.MemoKeyNum));
+
+    // 2. ロードした値を MapItem オブジェクトへマッピング
+    this.MemoCnt = new MemoItem(this.MemoKeyNum, text);
   }
 }
