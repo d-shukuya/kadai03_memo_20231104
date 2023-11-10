@@ -33,6 +33,10 @@ class MemoItem {
   SetMemCntToStorage() {
     localStorage.setItem(GetMemCntKeyName(this.MemoKeyNum), this.MemoText);
   }
+
+  DeleteMemCntFromStorage() {
+    localStorage.removeItem(GetMemCntKeyName(this.MemoKeyNum));
+  }
 }
 
 class MemoIndex {

@@ -137,7 +137,7 @@ class TopPage {
   }
 
   // MapItem削除時の処理
-  deleteMapItem() {
+  DeleteMap() {
     // 1. 新しい SelectedMapIndex を一つ上に設定
     let oldIndex = this.SelectedMapIndex;
     let newIndex = 0;

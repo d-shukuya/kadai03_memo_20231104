@@ -298,6 +298,22 @@ class MapItem {
     iconPinSet.append(iconLabel);
     $("main").append(iconPinSet);
   }
+
+  DeleteMemo(index) {
+    const memoIndex = this.MemoList[index];
+
+    // 1. 対象の Icon を画面から削除
+    $("main>.icon_pin_set").eq(index).remove();
+
+    // 2. MemoItem を localStorage から削除
+    memoIndex.MemoCnt.DeleteMemCntFromStorage();
+
+    // 3. 対象の MemoIndex を MemoList から削除
+    this.MemoList.splice(index, 1);
+
+    // 4. MemoList を localStorage に反映
+    this.SetMemAryToStorage();
+  }
 }
 
 // MapIndex クラス（マップ一覧の内容を保持）

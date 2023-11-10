@@ -93,9 +93,7 @@ $(
   "#edit_map_area>.modal_overlay, #create_map_area>.modal_overlay, .map_modal_close, #create_map_cancel, #edit_map_cancel, #memo_cancel"
 ).on("click", function () {
   // 1. 新規Map登録モーダルを閉じる
-  $(".map_name").val("");
-  $(".map_path").val("");
-  $(".modal_area").fadeOut();
+  ResetMapModal();
 });
 
 // 登録ボタン押下時の処理
@@ -113,9 +111,7 @@ $("#create_map_register").on("click", function () {
   topPage.CreateNewMap(name, path);
 
   // 4. モーダルを閉じる
-  $("#create_map_name").val("");
-  $("#create_map_path").val("");
-  $("#create_map_area").fadeOut();
+  ResetMapModal();
 });
 
 // 更新ボタン押下時の処理
@@ -131,8 +127,7 @@ $("#edit_map_update").on("click", function () {
   topPage.UpdateMapItem(name, path);
 
   // モーダルを閉じる
-  $("#edit_map_name").val("");
-  $("#edit_map_path").val("");
+  ResetMapModal();
   $("#edit_map_area").fadeOut();
 });
 
@@ -143,12 +138,10 @@ $("#edit_map_delete").on("click", function () {
   if (!result) return;
 
   // 2. オブジェクトの削除 & Map の再表示
-  topPage.deleteMapItem();
+  topPage.DeleteMap();
 
   // モーダルを閉じる
-  $("#edit_map_name").val("");
-  $("#edit_map_path").val("");
-  $("#edit_map_area").fadeOut();
+  ResetMapModal();
 });
 
 // メモ登録画面の操作
@@ -162,6 +155,8 @@ $("#map_img_blk").on("click", ".map_img", function (e) {
   const imgOffset = $(this).offset();
   clickedPointLeft = e.pageX - imgOffset.left;
   clickedPointTop = e.pageY - imgOffset.top;
+  $("#icon_type_selector").val("01");
+  $("#icon_size_selector").val("01");
   $("#memo_area").fadeIn();
 });
 
@@ -180,6 +175,7 @@ $("main").on("click", ".icon_pin_set", function () {
 
   // 4. 登録値の設定
   $("#memo_title").val(memoIndex.MemoTitle);
+  SetIconImgOnForm(memoIndex.IconType);
   $("#icon_type_selector").val(memoIndex.IconType);
   $("#icon_size_selector").val(memoIndex.IconSize);
   $("#memo_text").val(memoIndex.MemoCnt.MemoText);
@@ -202,7 +198,7 @@ $("#memo_save").on("click", function () {
   const memoText = $("#memo_text").val();
 
   // 2. バリデーションチェック
-  if (!MemoInputFormRequiredCheck(title)) {
+  if (!MemoInputFormRequiredCheck(title, iconType, iconSize)) {
     return;
   }
 
@@ -222,21 +218,26 @@ $("#memo_save").on("click", function () {
   memoIndex.CreateMemoCnt(memoText);
 
   // 4. モーダルを閉じる
-  $("#memo_title").val("");
-  $("#icon_type_selector").val("");
-  $("#icon_size_selector").val("");
-  $("#memo_text").val("");
-  $("#memo_area").fadeOut();
+  ResetMemoModal();
 });
 
-// モーダルをキャンセル
+// モーダルを閉じる
 $("#memo_area>#memo_area_overlay, .memo_modal_close, #memo_cancel").on("click", function () {
   // 1. 値をリセットしてモーダルを閉じる
-  $("#memo_title").val("");
-  $("#icon_type_selector").val("");
-  $("#icon_size_selector").val("");
-  $("#memo_text").val("");
-  $(".modal_area").fadeOut();
+  ResetMemoModal();
+});
+
+// 削除ボタン押下時の処理
+$("#memo_delete").on("click", function () {
+  // 1. 警告
+  const result = confirm("Memoを削除して良いですか？");
+  if (!result) return;
+
+  // 2. オブジェクトの削除 & Map の再表示
+  topPage.CurrentMapItem.DeleteMemo(topPage.CurrentMapItem.SelectedMemoIndexIndex);
+
+  // モーダルを閉じる
+  ResetMemoModal();
 });
 
 // 関数
@@ -253,12 +254,39 @@ MapInputFormRequiredCheck = function (name, path) {
 };
 
 // Memoの必須バリデーションチェック
-MemoInputFormRequiredCheck = function (title) {
+MemoInputFormRequiredCheck = function (title, iconType, iconSize) {
   if (title == "") {
     alert("「Title」は必須です。入力してください。");
     return false;
+  } else if (iconType == "") {
+    alert("「Icon」は必須です。入力してください。");
+    return false;
+  } else if (iconSize == "") {
+    alert("「Icon size」は必須です。入力してください。");
+    return false;
   }
   return true;
+};
+
+ResetMapModal = function () {
+  $(".modal_area").fadeOut();
+  $(".map_name").val("");
+  $(".map_path").val("");
+};
+
+ResetMemoModal = function () {
+  $(".modal_area").fadeOut();
+  $("#memo_title").val("");
+  $("#icon_type_selector").val("");
+  $("#icon_size_selector").val("");
+  $("#memo_text").val("");
+  SetIconImgOnForm("01");
+};
+
+SetIconImgOnForm = function (type) {
+  $("#memo_icon_img_blk").empty();
+  const iconImg = $(`<img />`).attr({ src: iconImgDic[type] });
+  $("#memo_icon_img_blk").append(iconImg);
 };
 
 GetMapCntKeyName = function (keyNum) {
