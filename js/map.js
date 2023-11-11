@@ -301,8 +301,8 @@ class MapItem {
         // ドロップ位置の位置を取得
         const left = ui.position.left;
         const top = ui.position.top;
-        memoIndex.IconLeftRatio = self.ConvertToRatio(left);
-        memoIndex.IconTopRatio = self.ConvertToRatio(top);
+        memoIndex.IconLeftRatio = self.ConvertToRatio(left + 50);
+        memoIndex.IconTopRatio = self.ConvertToRatio(top + 40);
         // localStorage へ登録
         self.SetMemAryToStorage();
       },

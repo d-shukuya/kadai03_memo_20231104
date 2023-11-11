@@ -75,6 +75,11 @@ class TopPage {
     $("#map_list li").eq(oldIndex).removeClass(this.#selectedMapClassName);
     $("#map_list li").eq(newIndex).addClass(this.#selectedMapClassName);
     this.CurrentMapItem.ShowMapImg();
+
+    // 4. MemoList のロード
+    $('main').children().not('#map_img_blk').remove();
+    this.CurrentMapItem.LoadMemAryFromStorage();
+    this.CurrentMapItem.ShowMemoIcon();
   }
 
   // Map の新規作成処理
