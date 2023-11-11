@@ -294,6 +294,19 @@ class MapItem {
         top: `${this.ReconvertFromRatio(memoIndex.IconTopRatio) - 40}px`,
         left: `${this.ReconvertFromRatio(memoIndex.IconLeftRatio) - 50}px`,
       });
+
+    let self = this;
+    iconPinSet.draggable({
+      stop: function (event, ui) {
+        // ドロップ位置の位置を取得
+        const left = ui.position.left;
+        const top = ui.position.top;
+        memoIndex.IconLeftRatio = self.ConvertToRatio(left);
+        memoIndex.IconTopRatio = self.ConvertToRatio(top);
+        // localStorage へ登録
+        self.SetMemAryToStorage();
+      },
+    });
     iconPinSet.append(iconImg);
     iconPinSet.append(iconLabel);
     $("main").append(iconPinSet);
