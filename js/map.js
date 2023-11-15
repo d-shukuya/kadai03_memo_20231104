@@ -261,13 +261,13 @@ class MapItem {
     const memoIndex = this.MemoList[this.SelectedMemoIndexIndex];
     memoIndex.MemoTitle = title;
     memoIndex.IconType = type;
-    memoIndex.IconType = size;
+    memoIndex.IconSize = size;
 
     // 2. localStorage へ登録
     this.SetMemAryToStorage();
 
-    // 3. 画面表示
-    this.PutNewIcon(memoIndex);
+    // 3. 画面表示を更新
+    this.UpdateIcon(memoIndex);
 
     // 4. 返り値設定
     return memoIndex;
@@ -310,6 +310,23 @@ class MapItem {
     iconPinSet.append(iconImg);
     iconPinSet.append(iconLabel);
     $("main").append(iconPinSet);
+  }
+
+  UpdateIcon(memoIndex) {
+    // 該当のIconを取得
+    const iconPinSet = $("main>.icon_pin_set").eq(this.SelectedMemoIndexIndex);
+
+    // 中身をクリア
+    iconPinSet.empty();
+
+    // 中身をセット
+    const iconImg = $(`<img />`).attr({
+      class: `icon_pin ${iconSizeClass[memoIndex.IconSize]}`,
+      src: iconImgDic[memoIndex.IconType],
+    });
+    const iconLabel = $("<label />").attr({ class: "icon_pin_label" }).html(memoIndex.MemoTitle);
+    iconPinSet.append(iconImg);
+    iconPinSet.append(iconLabel);
   }
 
   DeleteMemo(index) {
